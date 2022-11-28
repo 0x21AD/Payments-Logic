@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Projects/Java/FawryReplica/jar/sqlite-jdbc-3.20.1.jar">
+	<classpathentry kind="lib" path="D:/My tools/FawryReplica/jar/sqlite-jdbc-3.20.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
