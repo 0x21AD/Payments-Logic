@@ -1,1 +1,9 @@
-/sqlliteConnection$User.class
+/AbstractUser.class
+/Admin.class
+/AdminAuthHandler.class
+/App.class
+/AuthHandler.class
+/User.class
+/UserAuthHandler.class
+/sqlliteConnection.class
+/MainMenuView.class
