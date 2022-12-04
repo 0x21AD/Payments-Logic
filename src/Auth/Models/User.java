@@ -1,6 +1,8 @@
 package Auth.Models;
 
 import java.util.Scanner;
+
+import Payment.CreditCardPayment;
 import UI.MainMenuView;
 
 public class User extends AbstractUser {
@@ -49,35 +51,33 @@ public class User extends AbstractUser {
         System.out.println(String.format("Welcome Back %s!", this.getName()));
         System.out.println(String.format("your ballance  %f!", this.getBalance()));
         UserOptionsMenu();
-
-        // variable in string java
-        // System.out.println("Your balance is ${balance}!");
     }
 
-    public static void UserOptionsMenu(){
+    public static void UserOptionsMenu() {
         int option;
-        String Search;
         float amount;
-        System.out.println("1. Recharge Wallet Balance\n2. Show all services\n3. Search Services\n4.logout");
+        System.out.println("1. Recharge Wallet Balance\n2. Show services\n3. logout");
         Scanner sc = new Scanner(System.in);
         option = sc.nextInt();
         if (option == 1) {
             System.out.println("Enter the amount you want to recharge");
             amount = sc.nextFloat();
-            //connect payment class
-        }
-        else if (option == 2){
+            CreditCardPayment creditCardPayment = new CreditCardPayment();
+            if (creditCardPayment.checkBalanceAndPay(amount)) {
+                User.getInstance().addBalance(amount);
+                System.out.println("Recharge " + amount + "$ successfully");
+                System.out.println("Your new balance is " + User.getInstance().getBalance() + "$");
+            } else {
+                System.out.println("Recharge failed");
+                System.out.println("insufficient balance");
+            }
+            UserOptionsMenu();
+        } else if (option == 2) {
             MainMenuView.showServices();
-        }
-        else if (option == 3){
-            System.out.println("Enter Service name:");
-            Search = sc.nextLine();
-        }
-        else if (option == 4){
+        } else if (option == 3) {
             System.out.println("loging out");
             MainMenuView.displayAuthMenu();
-        } 
-        else{
+        } else {
             System.out.println("Invalid option");
             UserOptionsMenu();
         }
