@@ -79,7 +79,7 @@ public class MainMenuView {
         ArrayList<AbstractService> services = UIHandler.getInstance().getServices();
         ArrayList<AbstractService> filteredBySearch = new ArrayList<AbstractService>();
         if (option == 1) {
-            System.out.println("Choose your provider:");
+            filteredBySearch.clear();
             for (AbstractService service : services) {
                 if (service.getServiceName() == "Mobile Recharge") {
                     filteredBySearch.add(service);
@@ -99,9 +99,10 @@ public class MainMenuView {
             filteredBySearch.get(selectedService - 1).pay();
             showServices();
         } else if (option == 2) {
+            filteredBySearch.clear();
             for (AbstractService service : services) {
-                filteredBySearch.add(service);
                 if (service.getServiceName() == "Internet Payment") {
+                    filteredBySearch.add(service);
                     System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
                 }
             }
@@ -118,6 +119,7 @@ public class MainMenuView {
             filteredBySearch.get(selectedService - 1).pay();
             showServices();
         } else if (option == 3) {
+            filteredBySearch.clear();
             for (AbstractService service : services) {
                 if (service.getServiceName() == "Landline") {
                     filteredBySearch.add(service);
@@ -137,6 +139,7 @@ public class MainMenuView {
             filteredBySearch.get(selectedService - 1).pay();
             showServices();
         } else if (option == 4) {
+            filteredBySearch.clear();
             for (AbstractService service : services) {
                 if (service.getServiceName() == "Donations") {
                     filteredBySearch.add(service);
@@ -156,6 +159,7 @@ public class MainMenuView {
             filteredBySearch.get(selectedService - 1).pay();
             showServices();
         } else if (option == 5) {
+            filteredBySearch.clear();
             System.out.println("Enter the name of the service provider you want to search for");
             Scanner sc1 = new Scanner(System.in);
             filteredBySearch.clear();

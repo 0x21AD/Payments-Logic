@@ -27,7 +27,7 @@ public class CreditCardPayment implements Payment {
 
     private void DecreaseBalance(float amount) {
         // connect to bank api and decrease balance
-        System.out.println("Decreased balance by " + amount);
+        System.out.println("Decreased balance from Credit Card by " + amount);
     }
 
     @Override

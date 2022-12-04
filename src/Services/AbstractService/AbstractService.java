@@ -9,7 +9,7 @@ public abstract class AbstractService {
     protected String serviceProviderName = creatserviceProviderName();
     protected Boolean COD = allowCod();
 
-    public Boolean getCOD() {
+    protected Boolean getCOD() {
         return COD;
     }
 
