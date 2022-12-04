@@ -173,7 +173,7 @@ public class SqlLite {
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                User user = new User(rs.getString("name"), rs.getString("email"),
+                User user = User.getInstance(rs.getString("name"), rs.getString("email"),
                         rs.getString("password"), rs.getFloat("balance"));
                 return user;
             }
