@@ -20,4 +20,9 @@ public class VodafoneMobileRecharge extends AbstractMobileRechargeService {
         return "Vodafone Mobile";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

@@ -20,4 +20,9 @@ public class OrangeInternet extends AbstractInternetPaymentService {
         return "Orange Internet";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

@@ -2,11 +2,19 @@ package Services.AbstractService;
 
 import java.util.Scanner;
 
+import Payment.*;
+
 public abstract class AbstractService {
-    public String serviceName = creatServiceName();
-    public String serviceProviderName = creatserviceProviderName();
-    public ServiceForm serviceForm = creatServiceForm();
-    public ServiceHandler serviceHandler = creatServiceHandler();
+    protected String serviceName = creatServiceName();
+    protected String serviceProviderName = creatserviceProviderName();
+    protected Boolean COD = allowCod();
+
+    public Boolean getCOD() {
+        return COD;
+    }
+
+    protected ServiceForm serviceForm = creatServiceForm();
+    protected ServiceHandler serviceHandler = creatServiceHandler();
 
     protected abstract ServiceForm creatServiceForm();
 
@@ -16,6 +24,16 @@ public abstract class AbstractService {
 
     protected abstract String creatserviceProviderName();
 
+    protected abstract Boolean allowCod();
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public String getServiceProviderName() {
+        return serviceProviderName;
+    }
+
     public final void pay() {
         serviceForm.PrintForm();
         float billAmount = serviceProviderGetBillLogic();
@@ -24,18 +42,41 @@ public abstract class AbstractService {
         Scanner sc = new Scanner(System.in);
         String option = sc.nextLine();
         if (option.equals("y") || option.equals("yes") || option.equals("y")) { // could be handled by regex later.
-            // check amount of money in the account
-            // if (payment.checkBalance(billAmount)) {
-            // serviceProviderPayLogic();
-            // } else {
-            // System.out.println("You don't have enough money in your account");
-            // }
+            Payment payment = printPaymentMenu();
+            if (payment.checkBalanceAndPay(billAmount)) {
+                System.out.println("Payment successful");
+                serviceProviderPayLogic();
+            } else {
+                System.out.println("Payment failed");
+                System.out.println("Insufficient balance");
+            }
         } else {
             System.out.println("You have not paid the bill");
         }
     }
 
-    public abstract float serviceProviderGetBillLogic();
+    private Payment printPaymentMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("choose payment method: ");
+        System.out.println("1- Credit Card");
+        System.out.println("2- Personal Wallet");
+        if (getCOD()) {
+            System.out.println("3- Cash on delivery");
+        }
+        int paymentMethod = sc.nextInt();
+        if (paymentMethod == 1) {
+            return new CreditCardPayment();
+        } else if (paymentMethod == 2) {
+            return new BalancePayment();
+        } else if (paymentMethod == 3 && getCOD()) {
+            return new CashOnDelivery();
+        } else {
+            System.out.println("Invalid payment method");
+            return printPaymentMenu();
+        }
+    }
 
-    public abstract void serviceProviderPayLogic();
+    protected abstract float serviceProviderGetBillLogic();
+
+    protected abstract void serviceProviderPayLogic();
 }

@@ -20,4 +20,9 @@ public class EtisalatMobileRecharge extends AbstractMobileRechargeService {
         return "Etisalat Mobile";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

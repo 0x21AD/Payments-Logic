@@ -20,4 +20,9 @@ public class EtisalatInternet extends AbstractInternetPaymentService {
         return "Etisalat Internet";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

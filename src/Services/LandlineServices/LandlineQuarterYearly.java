@@ -19,4 +19,9 @@ public class LandlineQuarterYearly extends AbstractLandlineService {
         return "Landline Quarter Yearly";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

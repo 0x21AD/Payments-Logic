@@ -5,7 +5,6 @@ public class Hospital75375 extends AbstractDonationsService {
     @Override
     public void serviceProviderPayLogic() {
         serviceHandler.pay("http://www.Fawry.com/" + getDonationAccount() + "/pay", serviceForm);
-
     }
 
     @Override
@@ -24,6 +23,11 @@ public class Hospital75375 extends AbstractDonationsService {
     @Override
     protected String creatserviceProviderName() {
         return "Hospital 75375";
+    }
+
+    @Override
+    protected Boolean allowCod() {
+        return true;
     }
 
 }
