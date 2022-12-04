@@ -1,5 +1,4 @@
 package UI;
-
 import java.util.Scanner;
 import Auth.SqlLite;
 import Auth.Handlers.AdminAuthHandler;
@@ -89,8 +88,8 @@ public class MainMenuView {
             System.out.println("");
         }
         else if(option == "6"){
-            System.out.println("Going Back to login Menu!");
-            displayAuthMenu();
+            System.out.println("Going Back!");
+            User.UserOptionsMenu();
         }
         else{
             System.out.println("Invalid option!");
