@@ -19,4 +19,9 @@ public class LandlineMonthly extends AbstractLandlineService {
         return "Landline Monthly";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

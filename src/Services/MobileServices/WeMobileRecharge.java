@@ -19,4 +19,9 @@ public class WeMobileRecharge extends AbstractMobileRechargeService {
         return "We Mobile";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

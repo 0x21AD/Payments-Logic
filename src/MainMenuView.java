@@ -8,7 +8,7 @@ import Auth.Models.Admin;
 import Auth.Models.User;
 
 public class MainMenuView {
-    public static void display() {
+    public static void displayAuthMenu() {
         SqlLite.createTables();
         AuthHandler auth;
         Scanner sc = new Scanner(System.in);
@@ -56,7 +56,7 @@ public class MainMenuView {
             }
         } else {
             System.out.println("Invalid option");
-            display();
+            displayAuthMenu();
         }
         sc.close();
     }

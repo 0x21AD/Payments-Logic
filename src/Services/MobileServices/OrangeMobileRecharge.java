@@ -20,4 +20,9 @@ public class OrangeMobileRecharge extends AbstractMobileRechargeService {
         return "Orange Mobile";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

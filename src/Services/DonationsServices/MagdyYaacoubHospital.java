@@ -26,4 +26,9 @@ public class MagdyYaacoubHospital extends AbstractDonationsService {
         return "Magdy Yaacoub Hospital";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

@@ -34,6 +34,12 @@ public class User extends AbstractUser {
         this.balance = balance;
     }
 
+    public void decreaseBalance(float amount) {
+        if (this.balance >= amount) {
+            this.balance -= amount;
+        }
+    }
+
     public void userPanel() {
         System.out.println(String.format("Welcome Back %s!", this.getName()));
         System.out.println(String.format("your ballance  %f!", this.getBalance()));

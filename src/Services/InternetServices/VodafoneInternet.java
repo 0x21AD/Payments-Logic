@@ -20,4 +20,9 @@ public class VodafoneInternet extends AbstractInternetPaymentService {
         return "Vodafone Internet";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }

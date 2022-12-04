@@ -20,4 +20,9 @@ public class WeInternet extends AbstractInternetPaymentService {
         return "We Internet";
     }
 
+    @Override
+    protected Boolean allowCod() {
+        return false;
+    }
+
 }
