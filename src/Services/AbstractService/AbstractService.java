@@ -1,27 +1,18 @@
 package Services.AbstractService;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import Auth.Models.User;
 import Discount.Discount;
 import Discount.DiscountType;
 import Payment.*;
-import UI.DataStoreRuntime;
+import RuntimeData.DataStoreRuntime;
+import UI.InputValidator;
 
 public abstract class AbstractService {
     protected String serviceName = creatServiceName();
     protected String serviceProviderName = creatserviceProviderName();
     protected Boolean COD = allowCod();
     protected ArrayList<Discount> discounts = new ArrayList<Discount>();
-
-    public ArrayList<Discount> getDiscounts() {
-        return discounts;
-    }
-
-    protected Boolean getCOD() {
-        return COD;
-    }
 
     protected ServiceForm serviceForm = creatServiceForm();
     protected ServiceHandler serviceHandler = creatServiceHandler();
@@ -44,6 +35,14 @@ public abstract class AbstractService {
         return serviceProviderName;
     }
 
+    public ArrayList<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    protected Boolean getCOD() {
+        return COD;
+    }
+
     public void notifyAddDiscount(Discount discount) {
         discounts.add(discount);
 
@@ -62,14 +61,11 @@ public abstract class AbstractService {
             billAmount = applyDiscount(billAmount);
             System.out.println("The bill amount after discount is " + billAmount);
         }
-        System.out.println("Do you wish to pay the bill ?(y/n)");
-        Scanner sc = new Scanner(System.in);
-        String option = sc.nextLine();
-        if (option.equals("y") || option.equals("yes") || option.equals("y")) { // could be handled by regex later.
-            Payment payment = printPaymentMenu();
+        Boolean option = InputValidator.validateInputPayBill();
+        if (option) {
+            Payment payment = paymentMethod();
             if (payment.checkBalanceAndPay(billAmount)) {
-                Transaction transaction = new Transaction(this, billAmount);
-                DataStoreRuntime.getInstance().addTransaction(transaction);
+                DataStoreRuntime.getInstance().addTransaction(new Transaction(this, billAmount));
                 System.out.println("Payment successful");
                 serviceProviderPayLogic();
             } else {
@@ -93,24 +89,14 @@ public abstract class AbstractService {
         return amount - (discountAmount * amount);
     }
 
-    private Payment printPaymentMenu() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("choose payment method: ");
-        System.out.println("1- Credit Card");
-        System.out.println("2- Personal Wallet");
-        if (getCOD()) {
-            System.out.println("3- Cash on delivery");
-        }
-        int paymentMethod = sc.nextInt();
+    private Payment paymentMethod() {
+        int paymentMethod = InputValidator.validateInputPaymentMenu(getCOD());
         if (paymentMethod == 1) {
             return new CreditCardPayment();
         } else if (paymentMethod == 2) {
             return new BalancePayment();
-        } else if (paymentMethod == 3 && getCOD()) {
-            return new CashOnDelivery();
         } else {
-            System.out.println("Invalid payment method");
-            return printPaymentMenu();
+            return new CashOnDelivery();
         }
     }
 

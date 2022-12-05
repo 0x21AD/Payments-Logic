@@ -1,4 +1,4 @@
-package UI;
+package RuntimeData;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,16 @@ public class DataStoreRuntime {
 
     public ArrayList<AbstractService> getServices() {
         return services;
+    }
+
+    public ArrayList<String> getServicesNames() {
+        ArrayList<String> servicesNames = new ArrayList<String>();
+        for (AbstractService service : services) {
+            if (!servicesNames.contains(service.getServiceName())) {
+                servicesNames.add(service.getServiceName());
+            }
+        }
+        return servicesNames;
     }
 
     public void addTransaction(Transaction transaction) {
