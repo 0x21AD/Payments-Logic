@@ -12,6 +12,17 @@ import UI.DataStoreRuntime;
 public class User extends AbstractUser {
     private float balance;
     private static User user = null;
+    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+
+    public ArrayList<Transaction> getTransactions() {
+        transactions.clear();
+        for (Transaction transaction : DataStoreRuntime.getInstance().getTransactions()) {
+            if (transaction.getUser().getEmail().equals(User.getInstance().getEmail())) {
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
+    }
 
     private User(String name, String email, String password, float balance) {
         super(name, email, password);
@@ -87,12 +98,8 @@ public class User extends AbstractUser {
                 MainMenuView.showServices();
             } else if (option == 3) {
                 int selectedService;
-                ArrayList<Transaction> userTransactions = new ArrayList<Transaction>();
-                for (Transaction transaction : DataStoreRuntime.getInstance().getTransactions()) {
-                    if (transaction.getUser().getEmail().equals(User.getInstance().getEmail())) {
-                        userTransactions.add(transaction);
-                    }
-                }
+
+                ArrayList<Transaction> userTransactions = User.getInstance().getTransactions();
                 User.getInstance().showTransactions(userTransactions);
                 System.out.println("0. go back");
                 System.out.print("Choose transaction to refund:");
