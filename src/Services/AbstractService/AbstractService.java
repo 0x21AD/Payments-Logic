@@ -2,7 +2,9 @@ package Services.AbstractService;
 
 import java.util.Scanner;
 
+import Auth.Models.User;
 import Payment.*;
+import UI.DataStoreRuntime;
 
 public abstract class AbstractService {
     protected String serviceName = creatServiceName();
@@ -44,6 +46,8 @@ public abstract class AbstractService {
         if (option.equals("y") || option.equals("yes") || option.equals("y")) { // could be handled by regex later.
             Payment payment = printPaymentMenu();
             if (payment.checkBalanceAndPay(billAmount)) {
+                Transaction transaction = new Transaction(this, billAmount);
+                DataStoreRuntime.getInstance().addTransaction(transaction);
                 System.out.println("Payment successful");
                 serviceProviderPayLogic();
             } else {
