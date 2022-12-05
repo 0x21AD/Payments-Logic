@@ -1,9 +1,10 @@
 package Services.DonationsServices;
 
+//Concrete CLasss Service Provider
 public class Hospital75375 extends AbstractDonationsService {
 
     @Override
-    public void serviceProviderPayLogic() {
+    protected void serviceProviderPayLogic() {
         serviceHandler.pay("http://www.Fawry.com/" + getDonationAccount() + "/pay", serviceForm);
     }
 
@@ -13,7 +14,7 @@ public class Hospital75375 extends AbstractDonationsService {
     }
 
     @Override
-    public float serviceProviderGetBillLogic() {
+    protected float serviceProviderGetBillLogic() {
         float billAmount = serviceHandler.getBill("http://www.Fawry.com/" + getDonationAccount() + "/getbill",
                 serviceForm);
         return billAmount;

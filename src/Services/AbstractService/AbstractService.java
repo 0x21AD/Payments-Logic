@@ -8,6 +8,7 @@ import Payment.*;
 import RuntimeData.DataStoreRuntime;
 import UI.InputValidator;
 
+//Abstract Factory Class
 public abstract class AbstractService {
     protected String serviceName = creatServiceName();
     protected String serviceProviderName = creatserviceProviderName();
@@ -43,16 +44,19 @@ public abstract class AbstractService {
         return COD;
     }
 
+    // notify Method
     public void notifyAddDiscount(Discount discount) {
         discounts.add(discount);
 
     }
 
+    // notify Method
     public void notifyRemoveDiscount(Discount discount) {
         discounts.remove(discount);
 
     }
 
+    // Template Method
     public final void pay() {
         serviceForm.PrintForm();
         float billAmount = serviceProviderGetBillLogic();
@@ -77,7 +81,7 @@ public abstract class AbstractService {
         }
     }
 
-    public float applyDiscount(float amount) {
+    private float applyDiscount(float amount) {
         float discountAmount = 0;
         for (Discount discount : discounts) {
             if (discount.getDiscountType().equals(DiscountType.Overall)

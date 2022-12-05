@@ -3,6 +3,7 @@ package Services.LandlineServices;
 import Services.AbstractService.ServiceForm;
 import Services.AbstractService.ServiceHandler;
 
+//Concrete Product B
 public class LandlineHandler extends ServiceHandler {
     @Override
     public void pay(String serviceRequest, ServiceForm serviceForm) {

@@ -1,5 +1,6 @@
 package Payment;
 
+//Strategy Concrete Class
 public class CashOnDelivery implements Payment {
 
     @Override

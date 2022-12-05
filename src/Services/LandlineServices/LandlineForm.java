@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Services.AbstractService.ServiceForm;
 
+//Concrete Product A
 public class LandlineForm extends ServiceForm {
     private String LandLineNumber;
 

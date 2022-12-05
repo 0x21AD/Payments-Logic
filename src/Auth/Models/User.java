@@ -8,6 +8,7 @@ import RuntimeData.DataStoreRuntime;
 import UI.MainMenuView;
 import UI.InputValidator;
 
+//Singelton
 public class User extends AbstractUser {
     private float balance;
     private static User user = null;

@@ -9,6 +9,7 @@ import Services.InternetServices.*;
 import Services.LandlineServices.*;
 import Services.MobileServices.*;
 
+//Singelton
 public class DataStoreRuntime {
     private ArrayList<AbstractService> services = new ArrayList<AbstractService>();
     private ArrayList<Transaction> refundServices = new ArrayList<Transaction>();

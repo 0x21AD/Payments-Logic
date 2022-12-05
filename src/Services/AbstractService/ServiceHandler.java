@@ -1,6 +1,6 @@
 package Services.AbstractService;
 
-//product
+//Product B
 public abstract class ServiceHandler {
     public abstract void pay(String serviceRequest, ServiceForm serviceForm);
 

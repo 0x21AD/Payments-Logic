@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Services.AbstractService.ServiceForm;
 
+//Concrete Product A
 public class MobileRechargeForm extends ServiceForm {
     private String mobileNumber;
     private String rechargeAmount;

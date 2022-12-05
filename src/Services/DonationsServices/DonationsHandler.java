@@ -3,6 +3,7 @@ package Services.DonationsServices;
 import Services.AbstractService.ServiceForm;
 import Services.AbstractService.ServiceHandler;
 
+//Concrete Product B
 public class DonationsHandler extends ServiceHandler {
     @Override
     public void pay(String serviceRequest, ServiceForm serviceForm) {

@@ -1,5 +1,6 @@
 package Services.InternetServices;
 
+//Concrete CLasss Service Provider
 public class EtisalatInternet extends AbstractInternetPaymentService {
 
     @Override

@@ -3,6 +3,7 @@ package Services.InternetServices;
 import Services.AbstractService.ServiceForm;
 import Services.AbstractService.ServiceHandler;
 
+//Concrete Product B
 public class InternetPaymentHandler extends ServiceHandler {
     @Override
     public void pay(String serviceRequest, ServiceForm serviceForm) {

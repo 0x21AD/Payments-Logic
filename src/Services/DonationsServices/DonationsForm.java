@@ -3,6 +3,7 @@ package Services.DonationsServices;
 import Services.AbstractService.ServiceForm;
 import java.util.Scanner;
 
+//Concrete Product A
 public class DonationsForm extends ServiceForm {
     String DonationAccount;
     String DonationAmount;

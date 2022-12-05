@@ -9,6 +9,7 @@ import Services.AbstractService.AbstractService;
 import UI.InputValidator;
 import UI.MainMenuView;
 
+//Singelton
 public class Admin extends AbstractUser {
 
     public Admin(String name, String email, String password) {
@@ -50,6 +51,7 @@ public class Admin extends AbstractUser {
                     float discountAmount = InputValidator.validateInputDiscountPercentage();
                     Discount discount = new Discount(discountAmount, DiscountType.Overall);
                     for (AbstractService service : services) {
+                        // Notify all services with the new discount
                         service.notifyAddDiscount(discount);
                     }
                 } else if (option2 == 2) {
@@ -58,6 +60,7 @@ public class Admin extends AbstractUser {
                         adminPanel();
                     }
                     float discountAmount = InputValidator.validateInputDiscountPercentage();
+                    // Notify selected service with the new discount
                     services.get(option - 1).notifyAddDiscount(new Discount(discountAmount, DiscountType.Specific));
                 }
                 System.out.println("Discount Added Successfully");
@@ -71,6 +74,7 @@ public class Admin extends AbstractUser {
                     }
                     Discount discount2 = discount.get(option - 1);
                     for (AbstractService service : services) {
+                        // Notify all services with the removed discount
                         service.notifyRemoveDiscount(discount2);
                     }
                 } else if (option2 == 2) {
@@ -80,6 +84,7 @@ public class Admin extends AbstractUser {
                     }
                     ArrayList<Discount> discount = services.get(option - 1).getDiscounts();
                     option2 = InputValidator.validateInputDiscounts(discount, DiscountType.Specific);
+                    // Notify selected service with the removed discount
                     services.get(option - 1).notifyRemoveDiscount(discount.get(option2 - 1));
                 }
                 System.out.println("Discount Removed Successfully");

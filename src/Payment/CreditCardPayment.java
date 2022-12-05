@@ -2,6 +2,7 @@ package Payment;
 
 import java.util.Scanner;
 
+//Strategy Concrete Class
 public class CreditCardPayment implements Payment {
     String cardNumber;
     String cardHolderName;
@@ -9,15 +10,15 @@ public class CreditCardPayment implements Payment {
     String cvv;
 
     private void getCreditCardInfo() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter your card number: ");
-        this.cardNumber = scanner.nextLine();
+        this.cardNumber = sc.nextLine();
         System.out.println("Enter your card holder name: ");
-        this.cardHolderName = scanner.nextLine();
+        this.cardHolderName = sc.nextLine();
         System.out.println("Enter your card expiration date: ");
-        this.expirationDate = scanner.nextLine();
+        this.expirationDate = sc.nextLine();
         System.out.println("Enter your card cvv: ");
-        this.cvv = scanner.nextLine();
+        this.cvv = sc.nextLine();
     }
 
     private float getBalance() {

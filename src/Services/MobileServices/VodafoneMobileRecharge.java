@@ -1,15 +1,16 @@
 package Services.MobileServices;
 
+//Concrete CLasss Service Provider
 public class VodafoneMobileRecharge extends AbstractMobileRechargeService {
 
     @Override
-    public void serviceProviderPayLogic() {
+    protected void serviceProviderPayLogic() {
         serviceHandler.pay("http://www.vodafone.com/mobile/pay", serviceForm);
 
     }
 
     @Override
-    public float serviceProviderGetBillLogic() {
+    protected float serviceProviderGetBillLogic() {
         float billAmount = serviceHandler.getBill("http://www.vodafone.com/mobile/getbill", serviceForm);
         return billAmount;
 

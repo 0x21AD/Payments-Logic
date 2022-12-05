@@ -3,6 +3,7 @@ package Auth.Handlers;
 import Auth.SqlLite;
 import Auth.Models.AbstractUser;
 
+//Strategy Concrete Class
 public class AdminAuthHandler implements AuthHandler {
 
     @Override

@@ -1,15 +1,16 @@
 package Services.InternetServices;
 
+//Concrete CLasss Service Provider
 public class OrangeInternet extends AbstractInternetPaymentService {
 
     @Override
-    public void serviceProviderPayLogic() {
+    protected void serviceProviderPayLogic() {
         serviceHandler.pay("http://www.orange.com/internet/pay", serviceForm);
 
     }
 
     @Override
-    public float serviceProviderGetBillLogic() {
+    protected float serviceProviderGetBillLogic() {
         float billAmount = serviceHandler.getBill("http://www.orange.com/internet/getbill", serviceForm);
         return billAmount;
 
