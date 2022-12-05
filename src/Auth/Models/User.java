@@ -1,28 +1,16 @@
 package Auth.Models;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import Auth.SqlLite;
 import Payment.CreditCardPayment;
 import Payment.Transaction;
+import RuntimeData.DataStoreRuntime;
 import UI.MainMenuView;
-import UI.DataStoreRuntime;
+import UI.InputValidator;
 
 public class User extends AbstractUser {
     private float balance;
     private static User user = null;
-    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-
-    public ArrayList<Transaction> getTransactions() {
-        transactions.clear();
-        for (Transaction transaction : DataStoreRuntime.getInstance().getTransactions()) {
-            if (transaction.getUser().getEmail().equals(User.getInstance().getEmail())) {
-                transactions.add(transaction);
-            }
-        }
-        return transactions;
-    }
 
     private User(String name, String email, String password, float balance) {
         super(name, email, password);
@@ -56,11 +44,6 @@ public class User extends AbstractUser {
         SqlLite.updateBalance(getEmail(), this.balance);
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
-        SqlLite.updateBalance(getEmail(), this.balance);
-    }
-
     public void decreaseBalance(float amount) {
         if (this.balance >= amount) {
             this.balance -= amount;
@@ -68,83 +51,74 @@ public class User extends AbstractUser {
         }
     }
 
-    public void userPanel() {
-        System.out.println(String.format("Welcome Back %s!", this.getName()));
-        System.out.println(String.format("your ballance  %f!", this.getBalance()));
-        UserOptionsMenu();
+    public void printBalance() {
+        System.out.println(String.format("your ballance is  %f$", this.getBalance()));
     }
 
-    public static void UserOptionsMenu() {
-        int option;
-        float amount;
-        System.out.println("1. Recharge Wallet Balance\n2. Show services\n3. show Transactions\n4. logout \n");
-        Scanner sc = new Scanner(System.in);
+    public ArrayList<Transaction> getTransactions() {
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        for (Transaction transaction : DataStoreRuntime.getInstance().getTransactions()) {
+            if (transaction.getUser().getEmail().equals(User.getInstance().getEmail())) {
+                transactions.add(transaction);
+            }
+        }
+        return transactions;
+    }
+
+    public void userPanel() {
+        System.out.println(String.format("Welcome Back %s!", this.getName()));
+        printBalance();
+        userOptionsMenu();
+    }
+
+    public static void userOptionsMenu() {
+        DataStoreRuntime dts = DataStoreRuntime.getInstance();
+        System.out.println("User Panel");
         try {
-            option = sc.nextInt();
+            int option = InputValidator.validateInputUserMenu();
             if (option == 1) {
-                System.out.println("Enter the amount you want to recharge");
-                amount = sc.nextFloat();
+                float amount = InputValidator.validateInputAmountRecharge();
                 CreditCardPayment creditCardPayment = new CreditCardPayment();
                 if (creditCardPayment.checkBalanceAndPay(amount)) {
                     User.getInstance().addBalance(amount);
                     System.out.println("Recharge " + amount + "$ successfully");
-                    System.out.println("Your new balance is " + User.getInstance().getBalance() + "$");
+                    User.getInstance().printBalance();
                 } else {
                     System.out.println("Recharge failed");
                     System.out.println("insufficient balance");
                 }
-                UserOptionsMenu();
             } else if (option == 2) {
-                MainMenuView.showServices();
+                User.getInstance().printBalance();
             } else if (option == 3) {
-                int selectedService;
-
+                MainMenuView.showServices();
+                return;
+            } else if (option == 4) {
                 ArrayList<Transaction> userTransactions = User.getInstance().getTransactions();
-                User.getInstance().showTransactions(userTransactions);
-                System.out.println("0. go back");
-                System.out.print("Choose transaction to refund:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    UserOptionsMenu();
-                }
-                while (selectedService > userTransactions.size()) {
-                    System.out.println("Invalid option");
-                    User.getInstance().showTransactions(userTransactions);
-                    System.out.println("0. go back");
-                    System.out.print("Choose transaction to refund:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        UserOptionsMenu();
-                    }
+                int selectedService = InputValidator.validateInputTransactions(userTransactions);
+                if (selectedService == userTransactions.size() + 1) {
+                    userOptionsMenu();
                 }
                 Transaction transaction = userTransactions.get(selectedService - 1);
                 // if transaction doesn't exists in array the add
-                if (!DataStoreRuntime.getInstance().getRefundServices().contains(transaction)) {
-                    DataStoreRuntime.getInstance().addRefund(transaction);
+                if (!dts.getRefundServices().contains(transaction)) {
+                    dts.addRefund(transaction);
                     System.out.println("Refund request sent successfully");
                 } else {
                     System.out.println("Refund request already sent");
                 }
-                UserOptionsMenu();
-            } else if (option == 4) {
-                System.out.println("loging out");
+            } else if (option == 5) {
+                System.out.println("Logging out...");
                 clearUser();
                 MainMenuView.displayAuthMenu();
-            } else {
-                System.out.println("Invalid option");
-                UserOptionsMenu();
+                return;
             }
-        } catch (Exception e) {
+            userOptionsMenu();
+        } catch (
+
+        Exception e) {
             System.out.println("Invalid input");
-            UserOptionsMenu();
-        }
-
-    }
-
-    private void showTransactions(ArrayList<Transaction> userTransactions) {
-        for (int i = 0; i < userTransactions.size(); i++) {
-            System.out.println(i + 1 + ". " + userTransactions.get(i).getService().getServiceProviderName() + " "
-                    + userTransactions.get(i).getAmount() + "$");
+            userOptionsMenu();
         }
     }
+
 }

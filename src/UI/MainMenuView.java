@@ -8,6 +8,7 @@ import Auth.Handlers.AuthHandler;
 import Auth.Handlers.UserAuthHandler;
 import Auth.Models.Admin;
 import Auth.Models.User;
+import RuntimeData.DataStoreRuntime;
 import Services.AbstractService.AbstractService;
 
 public class MainMenuView {
@@ -75,167 +76,39 @@ public class MainMenuView {
     }
 
     public static void showServices() {
+        DataStoreRuntime dts = DataStoreRuntime.getInstance();
+        ArrayList<AbstractService> services = dts.getServices();
+        ArrayList<String> serviceNames = dts.getServicesNames();
+        ArrayList<AbstractService> filteredBySearch = new ArrayList<AbstractService>();
         int option, selectedService;
         String search;
-        System.out.println("Avaliable Services:");
-        System.out.println(
-                "1. Mobile Recharge Service \n2. Internet Recharge Service \n3. Landline Recharge Service \n4. Donations Services\n5. search for a service\n6.exit Menu");
-        System.out.println("Choose a Service: ");
         Scanner sc = new Scanner(System.in);
+        System.out.println("Avaliable Services:");
         try {
-            option = sc.nextInt();
-            ArrayList<AbstractService> services = DataStoreRuntime.getInstance().getServices();
-            ArrayList<AbstractService> filteredBySearch = new ArrayList<AbstractService>();
-            if (option == 1) {
-                filteredBySearch.clear();
-                for (AbstractService service : services) {
-                    if (service.getServiceName() == "Mobile Recharge") {
-                        filteredBySearch.add(service);
-                        System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
-                    }
-                }
-                System.out.println("0. go back");
-                System.out.print("Choose your provider:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    showServices();
-                }
-                while (selectedService > filteredBySearch.size() || selectedService < 0) {
-                    System.out.println("Invalid option");
-                    for (int i = 0; i < filteredBySearch.size(); i++) {
-                        System.out.println(i + 1 + ". " + filteredBySearch.get(i).getServiceProviderName());
-                    }
-                    System.out.println("0. go back");
-                    System.out.print("Choose your provider:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        showServices();
-                    }
-                }
-                filteredBySearch.get(selectedService - 1).pay();
-                showServices();
-            } else if (option == 2) {
-                filteredBySearch.clear();
-                for (AbstractService service : services) {
-                    if (service.getServiceName() == "Internet Payment") {
-                        filteredBySearch.add(service);
-                        System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
-                    }
-                }
-                System.out.println("0. go back");
-                System.out.print("Choose your provider:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    showServices();
-                }
-                while (selectedService > filteredBySearch.size() || selectedService < 0) {
-                    System.out.println("Invalid option");
-                    for (int i = 0; i < filteredBySearch.size(); i++) {
-                        System.out.println(i + 1 + ". " + filteredBySearch.get(i).getServiceProviderName());
-                    }
-                    System.out.println("0. go back");
-                    System.out.print("Choose your provider:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        showServices();
-                    }
-                }
-                filteredBySearch.get(selectedService - 1).pay();
-                showServices();
-            } else if (option == 3) {
-                filteredBySearch.clear();
-                for (AbstractService service : services) {
-                    if (service.getServiceName() == "Landline") {
-                        filteredBySearch.add(service);
-                        System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
-                    }
-                }
-                System.out.println("0. go back");
-                System.out.print("Choose your provider:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    showServices();
-                }
-                while (selectedService > filteredBySearch.size() || selectedService < 0) {
-                    System.out.println("Invalid option");
-                    for (int i = 0; i < filteredBySearch.size(); i++) {
-                        System.out.println(i + 1 + ". " + filteredBySearch.get(i).getServiceProviderName());
-                    }
-                    System.out.println("0. go back");
-                    System.out.print("Choose your provider:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        showServices();
-                    }
-                }
-                filteredBySearch.get(selectedService - 1).pay();
-                showServices();
-            } else if (option == 4) {
-                filteredBySearch.clear();
-                for (AbstractService service : services) {
-                    if (service.getServiceName() == "Donations") {
-                        filteredBySearch.add(service);
-                        System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
-                    }
-                }
-                System.out.println("0. go back");
-                System.out.print("Choose your provider:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    showServices();
-                }
-                while (selectedService > filteredBySearch.size() || selectedService < 0) {
-                    System.out.println("Invalid option");
-                    for (int i = 0; i < filteredBySearch.size(); i++) {
-                        System.out.println(i + 1 + ". " + filteredBySearch.get(i).getServiceProviderName());
-                    }
-                    System.out.println("0. go back");
-                    System.out.print("Choose your provider:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        showServices();
-                    }
-                }
-                filteredBySearch.get(selectedService - 1).pay();
-                showServices();
-            } else if (option == 5) {
-                filteredBySearch.clear();
+            option = InputValidator.validateInputServices(serviceNames);
+            if (option == services.size() + 2) {
+                User.userOptionsMenu();
+            } else if (option == services.size() + 1) {
                 System.out.println("Enter the name of the service provider you want to search for");
-                Scanner sc1 = new Scanner(System.in);
-                filteredBySearch.clear();
-                search = sc1.nextLine();
+                search = sc.nextLine();
                 for (AbstractService service : services) {
-                    if (service.getServiceProviderName().contains(search)) {
+                    if (service.getServiceProviderName().toLowerCase().contains(search.toLowerCase())) {
                         filteredBySearch.add(service);
-                        System.out.println(filteredBySearch.size() + ". " + service.getServiceProviderName());
                     }
                 }
-                System.out.println("0. go back");
-                System.out.print("Choose your provider:");
-                selectedService = sc.nextInt();
-                if (selectedService == 0) {
-                    showServices();
-                }
-                while (selectedService > filteredBySearch.size() || selectedService < 0) {
-                    System.out.println("Invalid option");
-                    for (int i = 0; i < filteredBySearch.size(); i++) {
-                        System.out.println(i + 1 + ". " + filteredBySearch.get(i).getServiceProviderName());
-                    }
-                    System.out.println("0. go back");
-                    System.out.print("Choose your provider:");
-                    selectedService = sc.nextInt();
-                    if (selectedService == 0) {
-                        showServices();
-                    }
-                }
-                filteredBySearch.get(selectedService - 1).pay();
-                showServices();
-            } else if (option == 6) {
-                System.out.println("Going Back!");
-                User.UserOptionsMenu();
             } else {
-                System.out.println("Invalid option!");
+                for (AbstractService service : services) {
+                    if (service.getServiceName().equals(serviceNames.get(option - 1))) {
+                        filteredBySearch.add(service);
+                    }
+                }
             }
+            selectedService = InputValidator.validateInputServicesProviders(filteredBySearch);
+            if (selectedService == filteredBySearch.size() + 1) {
+                showServices();
+            }
+            filteredBySearch.get(selectedService - 1).pay();
+            showServices();
         } catch (Exception e) {
             System.out.println("Invalid input");
             showServices();
