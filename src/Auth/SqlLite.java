@@ -90,6 +90,19 @@ public class SqlLite {
         }
     }
 
+    // update balance
+    public static void updateBalance(String email, float balance) {
+        String sql = "UPDATE user SET balance = ? WHERE email = ?";
+        try (Connection conn = SqlLite.Connector();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setFloat(1, balance);
+            pstmt.setString(2, email);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     // create registeration function admin
     public static Boolean registerAdmin(String name, String email, String password) {
         String sql = "INSERT INTO admin(name,email,password) VALUES(?,?,?)";

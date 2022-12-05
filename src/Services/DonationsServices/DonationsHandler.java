@@ -8,7 +8,7 @@ public class DonationsHandler extends ServiceHandler {
     public void pay(String serviceRequest, ServiceForm serviceForm) {
         System.out.println("You have paid the bill for " + serviceRequest);
         System.out
-                .println("You have paid for the landline service: "
+                .println("You have paid for the donation service: "
                         + ((DonationsForm) serviceForm).getDonationAccount());
     }
 
