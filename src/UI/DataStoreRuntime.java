@@ -18,28 +18,28 @@ public class DataStoreRuntime {
         return transactions;
     }
 
-    public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
-    }
-
-    public void removeTransaction(Transaction transaction) {
-        transactions.remove(transaction);
-    }
-
     public ArrayList<Transaction> getRefundServices() {
         return refundServices;
+    }
+
+    public ArrayList<AbstractService> getServices() {
+        return services;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
     }
 
     public void addRefund(Transaction transaction) {
         refundServices.add(transaction);
     }
 
-    public void removeRefund(Transaction transaction) {
-        refundServices.remove(transaction);
+    public void removeTransaction(Transaction transaction) {
+        transactions.remove(transaction);
     }
 
-    public ArrayList<AbstractService> getServices() {
-        return services;
+    public void removeRefund(Transaction transaction) {
+        refundServices.remove(transaction);
     }
 
     private static DataStoreRuntime ui = null;

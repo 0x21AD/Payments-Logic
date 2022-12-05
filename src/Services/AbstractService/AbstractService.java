@@ -1,8 +1,11 @@
 package Services.AbstractService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Auth.Models.User;
+import Discount.Discount;
+import Discount.DiscountType;
 import Payment.*;
 import UI.DataStoreRuntime;
 
@@ -10,6 +13,11 @@ public abstract class AbstractService {
     protected String serviceName = creatServiceName();
     protected String serviceProviderName = creatserviceProviderName();
     protected Boolean COD = allowCod();
+    protected ArrayList<Discount> discounts = new ArrayList<Discount>();
+
+    public ArrayList<Discount> getDiscounts() {
+        return discounts;
+    }
 
     protected Boolean getCOD() {
         return COD;
@@ -36,10 +44,24 @@ public abstract class AbstractService {
         return serviceProviderName;
     }
 
+    public void notifyAddDiscount(Discount discount) {
+        discounts.add(discount);
+
+    }
+
+    public void notifyRemoveDiscount(Discount discount) {
+        discounts.remove(discount);
+
+    }
+
     public final void pay() {
         serviceForm.PrintForm();
         float billAmount = serviceProviderGetBillLogic();
         System.out.println("The bill amount is " + billAmount);
+        if (applyDiscount(billAmount) != billAmount) {
+            billAmount = applyDiscount(billAmount);
+            System.out.println("The bill amount after discount is " + billAmount);
+        }
         System.out.println("Do you wish to pay the bill ?(y/n)");
         Scanner sc = new Scanner(System.in);
         String option = sc.nextLine();
@@ -57,6 +79,18 @@ public abstract class AbstractService {
         } else {
             System.out.println("You have not paid the bill");
         }
+    }
+
+    public float applyDiscount(float amount) {
+        float discountAmount = 0;
+        for (Discount discount : discounts) {
+            if (discount.getDiscountType().equals(DiscountType.Overall)
+                    && !User.getInstance().getTransactions().isEmpty()) {
+                continue;
+            }
+            discountAmount += discount.getDiscount();
+        }
+        return amount - (discountAmount * amount);
     }
 
     private Payment printPaymentMenu() {
