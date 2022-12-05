@@ -113,9 +113,8 @@ public class User extends AbstractUser {
                 return;
             }
             userOptionsMenu();
-        } catch (
-
-        Exception e) {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             System.out.println("Invalid input");
             userOptionsMenu();
         }

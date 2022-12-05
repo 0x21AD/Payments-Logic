@@ -86,9 +86,9 @@ public class MainMenuView {
         System.out.println("Avaliable Services:");
         try {
             option = InputValidator.validateInputServices(serviceNames);
-            if (option == services.size() + 2) {
+            if (option == serviceNames.size() + 2) {
                 User.userOptionsMenu();
-            } else if (option == services.size() + 1) {
+            } else if (option == serviceNames.size() + 1) {
                 System.out.println("Enter the name of the service provider you want to search for");
                 search = sc.nextLine();
                 for (AbstractService service : services) {
@@ -110,6 +110,7 @@ public class MainMenuView {
             filteredBySearch.get(selectedService - 1).pay();
             showServices();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             System.out.println("Invalid input");
             showServices();
         }

@@ -69,8 +69,9 @@ public class Admin extends AbstractUser {
                     if (option == discount.size() + 1) {
                         adminPanel();
                     }
+                    Discount discount2 = discount.get(option - 1);
                     for (AbstractService service : services) {
-                        service.notifyRemoveDiscount(discount.get(option - 1));
+                        service.notifyRemoveDiscount(discount2);
                     }
                 } else if (option2 == 2) {
                     option = InputValidator.validateInputServicesProviders(services);
@@ -88,6 +89,7 @@ public class Admin extends AbstractUser {
             }
             adminPanel();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             System.out.println("Invalid input");
             adminPanel();
         }

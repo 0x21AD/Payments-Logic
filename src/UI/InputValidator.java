@@ -92,7 +92,7 @@ public class InputValidator {
                         + refundTransactions.get(i).getAmount());
             }
             System.out.println(refundTransactions.size() + 1 + ". " + "Go Back");
-            System.out.print("Select a Refund request:");
+            System.out.println("Select a Refund request:");
             refundIndex = sc.nextInt();
         }
         return refundIndex;
@@ -168,8 +168,9 @@ public class InputValidator {
         Scanner sc = new Scanner(System.in);
         System.out.println("Do you wish to pay the bill ?(y/n)");
         String option = sc.nextLine();
-        while (!option.toLowerCase().equals("y") || !option.toLowerCase().equals("yes")
-                || !option.toLowerCase().equals("n") || !option.toLowerCase().equals("no")) {
+        while (!option.toLowerCase().equals("y") && !option.toLowerCase().equals("yes")
+                && !option.toLowerCase().equals("n")
+                && !option.toLowerCase().equals("no")) {
             System.out.println("Invalid option");
             System.out.println("Do you wish to pay the bill ?(y/n)");
             option = sc.nextLine();

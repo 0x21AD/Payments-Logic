@@ -26,7 +26,7 @@ public class ListsPrinter {
     public static void printDiscounts(ArrayList<Discount> discounts, DiscountType discountType) {
         for (int i = 0; i < discounts.size(); i++) {
             if (discounts.get(i).getDiscountType() == discountType) {
-                System.out.println(i + 1 + ". " + discounts.get(i).getDiscount());
+                System.out.println(i + 1 + ". " + discounts.get(i).getDiscount() * 100);
             }
         }
     }
