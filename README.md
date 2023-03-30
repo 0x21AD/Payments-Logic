@@ -34,12 +34,6 @@ Once the application runs you should see something like this
 
 - Comment this code
 
-```
-# online config
-spring.datasource.url=jdbc:postgresql://suleiman.db.elephantsql.com:5432/kfftlrmx
-spring.datasource.username=kfftlrmx
-spring.datasource.password=dKDYrxMvI9IIFfhz6_VP53L1GQPhc5ZU
-```
 
 - Uncomment this code and add your database info
 
